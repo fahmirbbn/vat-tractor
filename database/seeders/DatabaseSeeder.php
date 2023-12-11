@@ -15,8 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        $this->call(RencanaKerjaSeeder::class);
+        // $this->call(RencanaKerjaSeeder::class);
         $this->call(PermissionRoleSeeder::class);
         $this->call(NewsTableSeeder::class);
+        // $this->call(MasterActivitySeeder::class);
+        // $this->call(MasterUnitSeeder::class);
+        // $this->call(MasterImplementSeeder::class);
     }
 }

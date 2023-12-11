@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\RencanaKerja;
+use App\Models\MasterUnit;
+use App\Models\MasterImplement;
+use App\Models\MasterActivity;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
@@ -18,8 +21,17 @@ class RencanaKerjaController extends Controller
 
    public function create()
    {
-      return view('admin.rencana_kerja.create');
+    $units = MasterUnit::pluck('unit_name', 'id');
+    $implements = MasterImplement::pluck('implement_name', 'id');
+    $activities = MasterActivity::pluck('activity_name', 'id');
+
+    return view('admin.rencana_kerja.create')->with([
+        'units' => $units,
+        'implements' => $implements,
+        'activities' => $activities,
+    ]);
    }
+
 
    public function edit($id)
    {
@@ -28,6 +40,45 @@ class RencanaKerjaController extends Controller
          'data' => $data
       ]);
    }
+
+   public function update(Request $request, $id)
+   {
+      $request->validate([
+         'location_code' => 'required',
+         'mst_unit_id' => 'required', 
+         'implement_id' => 'required', 
+         'mst_activity_id' => 'required',
+         'activity_date' => 'required',
+         'operator_name' => 'required',
+      ]);
+
+      $unit = MasterUnit::findOrFail($request->mst_unit_id); 
+      $unitName = $unit->unit_name;
+
+      $activities = MasterActivity::findOrFail($request->mst_activity_id);
+      $activityName = $activities->activity_name;
+
+      $implements = MasterImplement::findOrFail($request->implement_id); 
+      $implementName = $implements->implement_name;
+
+      $data = [
+         'location_code' => $request->location_code,
+         'unit_name' => $unitName,
+         'implement_name' => $implementName,
+         'activity_name' => $activityName,
+         'activity_date' => $request->activity_date,
+         'operator_name' => $request->operator_name,
+      ];
+
+      $query = RencanaKerja::findOrFail($id)->update($data);
+
+      if ($query) {
+         return redirect()->route('admin.rencana_kerja.index')->withFlashSuccess(__('Data Updated Successfully'));
+      } else {
+         return redirect()->route('admin.rencana_kerja.index')->withFlashDanger(__('Data Failed To Update'));
+      }
+   }
+
 
    public function destroy($id)
    {
@@ -39,29 +90,38 @@ class RencanaKerjaController extends Controller
    public function store(Request $request)
    {
       $request->validate([
-         'title'         => 'required|max:200',
-         'description'   => 'required',
-         'status'        => 'in:draft,published',
+         'location_code' => 'required',
+         'mst_unit_id' => 'required', 
+         'implement_id' => 'required', 
+         'mst_activity_id' => 'required',
+         'activity_date' => 'required',
+         'operator_name' => 'required',
       ]);
+
+      $unit = MasterUnit::findOrFail($request->mst_unit_id); 
+      $unitName = $unit->unit_name;
+
+      $activities = MasterActivity::findOrFail($request->mst_activity_id);
+      $activityName = $activities->activity_name;
+
+      $implements = MasterImplement::findOrFail($request->implement_id); 
+      $implementName = $implements->implement_name;
+
       $data = [
-         'title' => $request->title,
-         'description' => $request->description,
-         'status' => ($request->status) ? $request->status : 'draft',
+         'location_code' => $request->location_code,
+         'unit_name' => $unitName,
+         'implement_name' => $implementName,
+         'activity_name' => $activityName,
+         'activity_date' => $request->activity_date,
+         'operator_name' => $request->operator_name,
       ];
-      // if ($request->image) {
-      //    $data['image'] = $request->file('image')->store('media_rencana_kerja', 'public');
-      // }
-      // $data['slug'] = Str::slug($request->title);
-      // if (isset($request->id)) {
-      //    $item = RencanaKerja::findOrFail($request->id);
-      //    $query = $item->update($data);
-      // } else {
-      //    $query = RencanaKerja::create($data);
-      // }
+      
+      $query = RencanaKerja::create($data);
+
       if ($query) {
-         return redirect()->route('admin.rencana_kerja.index')->withFlashSuccess(__('Data Saved Successfully'));
+         return redirect()->route('admin.rencana_kerja.index')->withFlashSuccess(__('Data Created Successfully'));
       } else {
-         return redirect()->route('admin.rencana_kerja.index')->withFlashDanger(__('Data Failed To Save'));
+         return redirect()->route('admin.rencana_kerja.index')->withFlashDanger(__('Data Failed To Create'));
       }
    }
 
@@ -69,7 +129,7 @@ class RencanaKerjaController extends Controller
    {
       $data = RencanaKerja::query();
       if(!$request->order[0]['column']){
-         $data = $data->orderBy('id', 'asc');
+         $data = $data->orderBy('id', 'desc');
       }
       return DataTables::of($data)
          ->make(true);

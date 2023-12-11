@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RencanaKerjaController;
+use App\Http\Controllers\Admin\MasterUnitController;
+use App\Http\Controllers\Admin\MasterImplementController;
+use App\Http\Controllers\Admin\MasterActivityController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -71,10 +74,41 @@ Route::middleware(['auth', 'permission:admin.access.index'])->group(function () 
       Route::group(['prefix' => 'rencana_kerja', 'as' => 'rencana_kerja.', 'middleware' => 'permission:admin.access.rencana_kerja'], function () {
          Route::get('/', [RencanaKerjaController::class, 'index'])->name('index');
          Route::get('create', [RencanaKerjaController::class, 'create'])->name('create');
+         Route::put('{id}/update', [RencanaKerjaController::class, 'update'])->name('update');
          Route::get('{id}/edit', [RencanaKerjaController::class, 'edit'])->name('edit');
          Route::delete('{id}/destroy', [RencanaKerjaController::class, 'destroy'])->name('destroy');
          Route::post('store', [RencanaKerjaController::class, 'store'])->name('store');
          Route::get('datatable', [RencanaKerjaController::class, 'datatable'])->name('datatable');
+      });
+
+      Route::group(['prefix' => 'unit', 'as' => 'unit.', 'middleware' => 'permission:admin.access.unit'], function () {
+         Route::get('/', [MasterUnitController::class, 'index'])->name('index');
+         Route::get('create', [MasterUnitController::class, 'create'])->name('create');
+         Route::put('{id}/update', [MasterUnitController::class, 'update'])->name('update');
+         Route::get('{id}/edit', [MasterUnitController::class, 'edit'])->name('edit');
+         Route::delete('{id}/destroy', [MasterUnitController::class, 'destroy'])->name('destroy');
+         Route::post('store', [MasterUnitController::class, 'store'])->name('store');
+         Route::get('datatable', [MasterUnitController::class, 'datatable'])->name('datatable');
+      });
+
+      Route::group(['prefix' => 'implement', 'as' => 'implement.', 'middleware' => 'permission:admin.access.implement'], function () {
+         Route::get('/', [MasterImplementController::class, 'index'])->name('index');
+         Route::get('create', [MasterImplementController::class, 'create'])->name('create');
+         Route::put('{id}/update', [MasterImplementController::class, 'update'])->name('update');
+         Route::get('{id}/edit', [MasterImplementController::class, 'edit'])->name('edit');
+         Route::delete('{id}/destroy', [MasterImplementController::class, 'destroy'])->name('destroy');
+         Route::post('store', [MasterImplementController::class, 'store'])->name('store');
+         Route::get('datatable', [MasterImplementController::class, 'datatable'])->name('datatable');
+      });
+
+      Route::group(['prefix' => 'activity', 'as' => 'activity.', 'middleware' => 'permission:admin.access.activity'], function () {
+         Route::get('/', [MasterActivityController::class, 'index'])->name('index');
+         Route::get('create', [MasterActivityController::class, 'create'])->name('create');
+         Route::put('{id}/update', [MasterActivityController::class, 'update'])->name('update');
+         Route::get('{id}/edit', [MasterActivityController::class, 'edit'])->name('edit');
+         Route::delete('{id}/destroy', [MasterActivityController::class, 'destroy'])->name('destroy');
+         Route::post('store', [MasterActivityController::class, 'store'])->name('store');
+         Route::get('datatable', [MasterActivityController::class, 'datatable'])->name('datatable');
       });
 
       Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'permission:admin.access.user'], function () {

@@ -22,7 +22,7 @@
                         </a>
                     </li>
                 @endif
-                @if ($logged_in_user->can('admin.access.news'))
+                {{-- @if ($logged_in_user->can('admin.access.news'))
                     <li class="nav-item">
                         <a href="{{ route('admin.news.index') }}"
                             class="nav-link {{ Route::is('admin.news.*') ? 'active' : '' }}">
@@ -32,7 +32,7 @@
                             </p>
                         </a>
                     </li>
-                @endif
+                @endif --}}
                 @if ($logged_in_user->can('admin.access.rencana_kerja'))
                     <li class="nav-item">
                         <a href="{{ route('admin.rencana_kerja.index') }}"
@@ -40,6 +40,50 @@
                             <i class="nav-icon fas fa-list"></i> <!-- Icon for Rencana Kerja -->
                             <p>
                                 Rencana Kerja
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if ($logged_in_user->can('admin.access.unit'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.unit.index') }}"
+                            class="nav-link {{ Route::is('admin.unit.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-truck-monster"></i>
+                            <p>
+                                Master Unit
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                {{-- @if ($logged_in_user->can('admin.access.location'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.location.index') }}"
+                            class="nav-link {{ Route::is('admin.location.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-book"></i>
+                            <p>
+                                Location
+                            </p>
+                        </a>
+                    </li>
+                @endif --}}
+                @if ($logged_in_user->can('admin.access.implement'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.implement.index') }}"
+                            class="nav-link {{ Route::is('admin.implement.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-book"></i>
+                            <p>
+                                Master Implement
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if ($logged_in_user->can('admin.access.activity'))
+                    <li class="nav-item">
+                        <a href="{{ route('admin.activity.index') }}"
+                            class="nav-link {{ Route::is('admin.activity.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-briefcase"></i>
+                            <p>
+                                Master Activity
                             </p>
                         </a>
                     </li>

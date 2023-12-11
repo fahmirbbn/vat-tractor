@@ -13,17 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('rencana_kerja', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('master_locations', function (Blueprint $table) {
+            $table->id();
             $table->string('location_code', 50);
-            $table->unsignedBigInteger('mst_unit_id')->nullable();
-            $table->string('unit_name', 100);
-            $table->unsignedBigInteger('implement_id')->nullable();
-            $table->string('implement_name', 100);
-            $table->unsignedBigInteger('mst_activity_id')->nullable();
-            $table->string('activity_name', 100);
-            $table->date('activity_date');
-            $table->string('operator_name', 100);
+            $table->string('location_name', 50);
+            $table->decimal('luas_bruto', 10, 2);
+            $table->decimal('luas_netto', 10, 2);
+            $table->string('geofence', 500);
             $table->integer('created_by')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->integer('updated_by')->nullable();
@@ -39,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rencana_kerjas');
+        Schema::dropIfExists('master_locations');
     }
 };

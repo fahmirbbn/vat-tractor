@@ -24,12 +24,21 @@ class PermissionRoleSeeder extends Seeder
       $admin_access_user = Permission::create(['name' => 'admin.access.user']);
       $admin_access_news = Permission::create(['name' => 'admin.access.news']);
       $admin_access_rencana_kerja = Permission::create(['name' => 'admin.access.rencana_kerja']);
+      $admin_access_unit = Permission::create(['name' => 'admin.access.unit']);
+      $admin_access_location = Permission::create(['name' => 'admin.access.location']);
+      $admin_access_implement = Permission::create(['name' => 'admin.access.implement']);
+      $admin_access_activity = Permission::create(['name' => 'admin.access.activity']);
+
 
       $role_admin->givePermissionTo($admin_access_index);
       $role_admin->givePermissionTo($admin_access_profile);
       $role_admin->givePermissionTo($admin_access_user);
       $role_admin->givePermissionTo($admin_access_news);
-      $role_admin->givePermissionTo($admin_access_rencana_kerja); // Add this line
+      $role_admin->givePermissionTo($admin_access_rencana_kerja);
+      $role_admin->givePermissionTo($admin_access_unit);
+      $role_admin->givePermissionTo($admin_access_location);
+      $role_admin->givePermissionTo($admin_access_implement);
+      $role_admin->givePermissionTo($admin_access_activity);
 
       // Role Operator
       $role_operator = Role::create(['name' => 'operator']);
@@ -37,7 +46,23 @@ class PermissionRoleSeeder extends Seeder
       $role_operator->givePermissionTo($admin_access_index);
       $role_operator->givePermissionTo($admin_access_profile);
       $role_operator->givePermissionTo($admin_access_news);
-      $role_operator->givePermissionTo($admin_access_rencana_kerja); // Add this line
+      $role_operator->givePermissionTo($admin_access_rencana_kerja);
+      $role_operator->givePermissionTo($admin_access_unit);
+      $role_operator->givePermissionTo($admin_access_location);
+      $role_operator->givePermissionTo($admin_access_implement);
+      $role_operator->givePermissionTo($admin_access_activity);
+
+      //role kassie
+      $role_kassie = Role::create(['name' => 'kassie']);
+
+      $role_kassie->givePermissionTo($admin_access_index);
+      $role_kassie->givePermissionTo($admin_access_profile);
+      $role_kassie->givePermissionTo($admin_access_news);
+      $role_kassie->givePermissionTo($admin_access_rencana_kerja);
+      $role_kassie->givePermissionTo($admin_access_unit);
+      $role_kassie->givePermissionTo($admin_access_location);
+      $role_kassie->givePermissionTo($admin_access_implement);
+      $role_kassie->givePermissionTo($admin_access_activity);
 
       // Role User
       $role_user = Role::create(['name' => 'user']);
@@ -51,6 +76,13 @@ class PermissionRoleSeeder extends Seeder
          'password' => bcrypt('secret'),
       ]);
       $admin->assignRole('admin');
+
+      $kassie = User::create([
+         'name' => 'Kassie',
+         'email' => 'kassie@email.com',
+         'password' => bcrypt('secret'),
+      ]);
+      $kassie->assignRole('kassie');
 
       $operator = User::create([
          'name' => 'Operator',

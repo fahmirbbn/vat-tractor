@@ -12,9 +12,37 @@ class RencanaKerja extends Model
 
     protected $table = 'rencana_kerja';
 
-//    protected $hidden = [
-//       'created_at',
-//       'updated_at',
-//       'deleted_at',
-//    ];
+    protected $fillable = [
+        'location_code',
+        'mst_unit_id',
+        'unit_name',
+        'implement_id',
+        'implement_name',
+        'mst_activity_id',
+        'activity_name',
+        'activity_date',
+        'operator_name',
+        'created_by',
+        'updated_by',
+    ];
+
+    public function unit()
+    {
+        return $this->belongsTo(MasterUnit::class, 'mst_unit_id');
+    }
+
+    public function implement()
+    {
+        return $this->belongsTo(MasterImplement::class, 'implement_id');
+    }
+
+    public function activity()
+    {
+        return $this->belongsTo(MasterActivity::class, 'mst_activity_id');
+    }
+
+    public function mstLocation()
+    {
+        return $this->belongsTo(MasterLocation::class, 'location_code');
+    }
 }
