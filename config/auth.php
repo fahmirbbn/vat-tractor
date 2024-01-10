@@ -64,6 +64,8 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        
+        Laravel\Sanctum\SanctumServiceProvider::class,
 
         // 'users' => [
         //     'driver' => 'database',

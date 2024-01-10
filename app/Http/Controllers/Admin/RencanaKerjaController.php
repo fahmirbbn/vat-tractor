@@ -31,15 +31,19 @@ class RencanaKerjaController extends Controller
         'activities' => $activities,
     ]);
    }
-
-
+ 
    public function edit($id)
    {
       $data = RencanaKerja::findOrFail($id);
-      return view('admin.rencana_kerja.edit')->with([
-         'data' => $data
-      ]);
+      $units = MasterUnit::pluck('unit_name', 'id');
+      $implements = MasterImplement::pluck('implement_name', 'id');
+      $activities = MasterActivity::pluck('activity_name', 'id');
+
+      // dd($data, $units, $implements, $activities);
+
+      return view('admin.rencana_kerja.edit', compact('data', 'units', 'implements', 'activities'));
    }
+
 
    public function update(Request $request, $id)
    {

@@ -22,7 +22,7 @@
         </section>
         @include('admin.includes.messages')
         <section class="content">
-                <form action="{{ route('admin.rencana_kerja.update', ['id' => $data->id]) }}" method="post">
+            <form action="{{ route('admin.rencana_kerja.update', ['id' => $data->id]) }}" method="post">
                 @csrf
                 @method('PUT') 
                 <div class="card">
@@ -33,31 +33,46 @@
                                 <input type="text" name="location_code" value="{{ old('location_code', $data->location_code) }}" class="form-control" id="location_code" placeholder="Location Code">
                             </div>
                         </div>
+                        <!-- Unit Name dropdown -->
                         <div class="form-group row">
-                            <label for="unit_name" class="col-sm-2 col-form-label">Unit Name</label>
+                            <label for="mst_unit_id" class="col-sm-2 col-form-label">Unit Name</label>
                             <div class="col-sm-4">
-                                <input type="text" name="unit_name" value="{{ old('unit_name', $data->unit_name) }}" class="form-control" id="unit_name" placeholder="Unit Name">
+                                <select name="mst_unit_id" class="form-control" id="mst_unit_id">
+                                    @foreach ($units as $id => $unit)
+                                        <option value="{{ $id }}" {{ old('mst_unit_id', $data->mst_unit_id) == $id ? 'selected' : '' }}>{{ $unit }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
+                        <!-- Implement Name dropdown -->
                         <div class="form-group row">
-                            <label for="implement_name" class="col-sm-2 col-form-label">Implement Name</label>
+                            <label for="implement_id" class="col-sm-2 col-form-label">Implement Name</label>
                             <div class="col-sm-4">
-                                <input type="text" name="implement_name" value="{{ old('implement_name', $data->implement_name) }}" class="form-control" id="implement_name" placeholder="Implement Name">
+                                <select name="implement_id" class="form-control" id="implement_id">
+                                    @foreach ($implements as $id => $implement)
+                                        <option value="{{ $id }}" {{ old('implement_id', $data->implement_id) == $id ? 'selected' : '' }}>{{ $implement }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
+                        <!-- Activity Name dropdown -->
                         <div class="form-group row">
-                            <label for="activity_name" class="col-sm-2 col-form-label">Activity Name</label>
+                            <label for="mst_activity_id" class="col-sm-2 col-form-label">Activity Name</label>
                             <div class="col-sm-4">
-                                <input type="text" name="activity_name" value="{{ old('activity_name', $data->activity_name) }}" class="form-control" id="activity_name" placeholder="Activity Name">
+                                <select name="mst_activity_id" class="form-control" id="mst_activity_id">
+                                    @foreach ($activities as $id => $activity)
+                                        <option value="{{ $id }}" {{ old('mst_activity_id', $data->mst_activity_id) == $id ? 'selected' : '' }}>{{ $activity }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                        </div>                      
+                        </div>
                         <div class="form-group row">
                             <label for="activity_date" class="col-sm-2 col-form-label">Activity Date</label>
                             <div class="col-sm-4">
                                 <input type="text" name="activity_date" value="{{ old('activity_date', $data->activity_date) }}" class="form-control" id="activity_date" placeholder="Activity Date">
                             </div>
                         </div>
-                         <div class="form-group row">
+                        <div class="form-group row">
                             <label for="operator_name" class="col-sm-2 col-form-label">Operator Name</label>
                             <div class="col-sm-4">
                                 <input type="text" name="operator_name" value="{{ old('operator_name', $data->operator_name) }}" class="form-control" id="operator_name" placeholder="Operator Name">
@@ -79,8 +94,8 @@
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 flatpickr('#activity_date', {
-                    enableTime: false, // Change to true if you want to enable time selection
-                    dateFormat: 'Y-m-d', // Adjust the date format as needed
+                    enableTime: false,
+                    dateFormat: 'Y-m-d',
                 });
             });
         </script>
